@@ -46,17 +46,19 @@ while True:
         'Выберите язык алфавита: русский или английский (р/а): '
     ).lower()
     if text == 'р':
-        language = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
+        language_lower = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
+        language_upper = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
         break
     elif text == 'а':
-        language = 'abcdefghijklmnopqrstuvwxyz'
+        language_lower = 'abcdefghijklmnopqrstuvwxyz'
+        language_upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         break
     else:
         print('Выберите из предложенного (русские буквы) "р" или "а"')
         continue
 
 while True:
-    shift = input('Задайте шаг сдвига вправо (целое число): ')
+    shift = input('Задайте шаг сдвига (целое число): ')
     if not shift.isdecimal():
         print('Введите целое число!')
         continue
@@ -65,12 +67,25 @@ while True:
         break
 
 while True:
-    original_text = input('Введите текст для шифрования: ')
+    original_text = input('Введите текст: ')
     if original_text:
         break
 
-#encrypted_text = []
-#
-#for c in original_text:
-#   language
-#    encrypted_text += 
+modified_text = []
+language_len = len(language_lower) 
+
+for c in original_text:
+    if c in language_lower:
+        modified_text.append(language_lower[
+            (language_lower.index(c) + shift * direction) % language_len
+        ])
+    elif c in language_upper:
+        modified_text.append(language_upper[
+            (language_upper.index(c) + shift * direction) % language_len
+        ])
+    else:
+        # Неалфавитные символы (пробелы, знаки) просто переносим как есть
+        modified_text.append(c)
+        
+print('Измененный текст:')
+print(''.join(modified_text))
